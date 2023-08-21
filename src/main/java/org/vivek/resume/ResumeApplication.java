@@ -1,4 +1,4 @@
-package com.example.resume;
+package org.vivek.resume;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
