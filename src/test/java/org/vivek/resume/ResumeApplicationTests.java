@@ -1,4 +1,4 @@
-package com.example.resume;
+package org.vivek.resume;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
