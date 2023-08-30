@@ -1,4 +1,4 @@
-package org.vivek.resume.security.model;
+package org.vivek.security.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,10 +1,12 @@
-package org.vivek.resume.security.repository;
+package org.vivek.security.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.vivek.resume.security.model.User;
+
+import org.vivek.security.entities.User;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     // Since email is unique, we'll find users by email

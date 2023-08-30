@@ -1,4 +1,4 @@
-package org.vivek.resume.security.model;
+package org.vivek.security.entities;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,16 +23,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String firstName;
-
     private String lastName;
-
     @Column(unique = true)
     private String email;
-
     private String password;
-
     @Enumerated(EnumType.STRING)
     private Role role;
     @Override

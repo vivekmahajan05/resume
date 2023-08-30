@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.vivek.resume.dao.CandidateRepository;
 import org.vivek.resume.entity.Candidate;
-import org.vivek.resume.resource.NotFoundException;
+import org.vivek.resume.exception.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;

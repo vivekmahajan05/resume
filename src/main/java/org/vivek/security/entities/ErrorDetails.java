@@ -1,4 +1,4 @@
-package org.vivek.resume.security.model;
+package org.vivek.security.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SigninRequest {
-    private String email;
-    private String password;
+public class ErrorDetails {
+    private String errorName;
+    private String uri;
+    private String errorDesc;
 }

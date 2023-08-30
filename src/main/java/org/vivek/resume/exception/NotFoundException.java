@@ -1,4 +1,4 @@
-package org.vivek.resume.resource;
+package org.vivek.resume.exception;
 
 public class NotFoundException extends RuntimeException{
 }

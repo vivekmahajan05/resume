@@ -1,12 +1,14 @@
-package org.vivek.resume.security.service.impl;
+package org.vivek.security.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.vivek.resume.security.repository.UserRepository;
-import org.vivek.resume.security.service.UserService;
+
+import org.vivek.security.repository.UserRepository;
+import org.vivek.security.service.UserService;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

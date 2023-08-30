@@ -1,46 +1,45 @@
-package org.vivek.resume.security.service.impl;
+package org.vivek.security.service.impl;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+import org.vivek.security.entities.SignUpRequest;
+import org.vivek.security.entities.SigninRequest;
+import org.vivek.security.entities.JwtAuthenticationResponse;
+import org.vivek.security.entities.Role;
+import org.vivek.security.entities.User;
+import org.vivek.security.repository.UserRepository;
+import org.vivek.security.service.AuthenticationService;
+import org.vivek.security.service.JwtService;
 
 import lombok.RequiredArgsConstructor;
-import org.vivek.resume.security.model.AuthenticationResponse;
-import org.vivek.resume.security.model.User;
-import org.vivek.resume.security.model.Role;
-import org.vivek.resume.security.repository.UserRepository;
-import org.vivek.resume.security.service.AuthenticationService;
-import org.vivek.resume.security.util.JwtUtil;
-import org.vivek.resume.security.model.SignUpRequest;
-import org.vivek.resume.security.model.SigninRequest;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtService;
+    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     @Override
-    public AuthenticationResponse signup(SignUpRequest request) {
+    public JwtAuthenticationResponse signup(SignUpRequest request) {
         var user = User.builder().firstName(request.getFirstName()).lastName(request.getLastName())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER).build();
         userRepository.save(user);
         var jwt = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwt).build();
+        return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
     @Override
-    public AuthenticationResponse signin(SigninRequest request) {
+    public JwtAuthenticationResponse signin(SigninRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
         var jwt = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwt).build();
+        return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 }
