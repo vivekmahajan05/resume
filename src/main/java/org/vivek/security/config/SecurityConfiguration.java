@@ -4,6 +4,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -31,21 +32,25 @@ import org.vivek.security.service.impl.JwtServiceImpl;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtService jwtService;
     private final UserService userService;
     private final HandlerExceptionResolver handlerExceptionResolver;
 
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Value("${spring.application.auth-url}/**") //This will return "/api/v1/auth/**" to match all request
+    private String requestMatchers;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/resumeApi/v1/auth/**")
+                .authorizeHttpRequests(request -> request.requestMatchers(requestMatchers)
                         .permitAll().anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(new JwtAuthenticationFilter(jwtService, userService, handlerExceptionResolver), UsernamePasswordAuthenticationFilter.class);
-
-                //.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(
+                        jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

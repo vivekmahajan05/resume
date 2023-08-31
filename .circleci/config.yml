@@ -8,6 +8,7 @@ jobs:
         docker:
             # specify the version you desire here
             - image: cimg/openjdk:20.0.1-node
+            - image: cimg/mysql:8.0
 
             # Specify service dependencies here if necessary
             # CircleCI maintains a library of pre-built images

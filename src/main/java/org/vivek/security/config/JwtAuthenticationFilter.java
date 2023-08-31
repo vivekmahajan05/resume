@@ -6,6 +6,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,6 +36,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserService userService;
     private final HandlerExceptionResolver handlerExceptionResolver;
 
+    @Value("${spring.application.auth-url}/")
+    private String authUrl;
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
@@ -46,7 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
             log.info("doFilterInternal if");
-            if (request.getRequestURI().startsWith("/resumeApi/v1/auth/")) {
+            if (request.getRequestURI().startsWith(authUrl)) {
                 filterChain.doFilter(request, response);
             } else {
                 handlerExceptionResolver.resolveException(request, response, null, new MissingAuthHeaderException("Missing Authorization Header or Token!"));

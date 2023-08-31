@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/resumeApi/v1/candidate/")
+@RequestMapping("${spring.application.resource-url}")
 public class CandidateController {
 
     @Autowired
