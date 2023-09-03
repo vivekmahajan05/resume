@@ -2,6 +2,7 @@ package org.vivek.resume.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.vivek.resume.entity.Education;
 import org.vivek.resume.entity.Summary;
 import org.vivek.resume.repository.CandidateRepository;
 import org.vivek.resume.entity.Candidate;
@@ -22,7 +23,10 @@ public class CandidateService {
         Set<Summary> summaries = candidate.getSummaries();
         candidate.addSummaries(summaries);
 
-        Candidate savedCandidate = candidateRepository.save(candidate);
+        Set<Education> educations = candidate.getEducations();
+        candidate.addEducations(educations);
+
+        Candidate savedCandidate = candidateRepository.saveAndFlush(candidate);
 
         return savedCandidate;
     }

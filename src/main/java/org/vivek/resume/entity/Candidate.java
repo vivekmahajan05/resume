@@ -2,18 +2,14 @@ package org.vivek.resume.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 import jakarta.validation.constraints.Email;
-import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "candidate")
 public class Candidate {
@@ -46,13 +42,25 @@ public class Candidate {
     @Column(name = "professional_summary", nullable = false, columnDefinition = "LONGTEXT")
     private String professionalSummary;
 
-
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private Set<Summary> summaries = new HashSet<>();
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "candidate", cascade = { CascadeType.ALL, CascadeType.MERGE})
+    private Set<Education> educations = new HashSet<>();
+
     public void addSummaries(Set<Summary> summaries){
         summaries.forEach(summary -> summary.setCandidate(this));
         this.summaries = summaries;
+    }
+
+    public void addEducations(Set<Education> educations){
+        educations.forEach(education -> education.setCandidate(this));
+        this.educations = educations;
     }
 }

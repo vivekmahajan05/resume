@@ -24,12 +24,14 @@ public class CandidateController {
 
     @Transactional
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addCandidate", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addCandidate(@RequestBody Candidate candidate) {
+    public ResponseEntity<Candidate> addCandidate(@RequestBody Candidate candidate) {
         log.debug(" Adding Candidate", candidate);
+        log.info("Summary:" + candidate.getSummaries());
+        log.info("Education:" + candidate.getEducations());
 
-        candidateService.saveCandidate(candidate);
+        //candidateService.saveCandidate(candidate);
 
-        return new ResponseEntity<>("One Candidate Added", HttpStatus.CREATED);
+        return new ResponseEntity<>(candidateService.saveCandidate(candidate), HttpStatus.CREATED);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getCandidate/{id}")
