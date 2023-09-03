@@ -59,10 +59,10 @@ public class AuthenticationControllerAdvice {
     /**
      * handlerOtherExceptions handles any unhandled exceptions.
      */
-    @ExceptionHandler(value = {Exception.class})
+    /*@ExceptionHandler(value = {Exception.class})
     public ResponseEntity<Object> handleOtherExceptions(Exception ex, WebRequest request) {
         String requestUri = ((ServletWebRequest)request).getRequest().getRequestURI().toString();
         ErrorDetails error =new ErrorDetails("Exception", requestUri, ex.getMessage());
         return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    }*/
 }

@@ -1,9 +1,9 @@
 package org.vivek.resume.controller;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +16,20 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${spring.application.resource-url}")
+@RequestMapping("${spring.application.resource-url}/candidate/")
 public class CandidateController {
 
     @Autowired
     private final CandidateService candidateService;
 
+    @Transactional
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addCandidate", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Candidate> addCandidate(@RequestBody Candidate candidate) {
+    public ResponseEntity<String> addCandidate(@RequestBody Candidate candidate) {
         log.debug(" Adding Candidate", candidate);
 
-        return new ResponseEntity<>(candidateService.saveCandidate(candidate), HttpStatus.OK);
+        candidateService.saveCandidate(candidate);
+
+        return new ResponseEntity<>("One Candidate Added", HttpStatus.CREATED);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getCandidate/{id}")
