@@ -2,12 +2,15 @@ package org.vivek.resume.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.vivek.resume.dao.CandidateRepository;
+import org.vivek.resume.entity.Education;
+import org.vivek.resume.entity.Summary;
+import org.vivek.resume.repository.CandidateRepository;
 import org.vivek.resume.entity.Candidate;
-import org.vivek.resume.resource.NotFoundException;
+import org.vivek.resume.exception.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +19,16 @@ public class CandidateService {
     private final CandidateRepository candidateRepository;
 
     public Candidate saveCandidate(Candidate candidate){
-        return candidateRepository.save(candidate);
+
+        Set<Summary> summaries = candidate.getSummaries();
+        candidate.addSummaries(summaries);
+
+        Set<Education> educations = candidate.getEducations();
+        candidate.addEducations(educations);
+
+        Candidate savedCandidate = candidateRepository.saveAndFlush(candidate);
+
+        return savedCandidate;
     }
 
     public Candidate getCandidateById(Integer id) {

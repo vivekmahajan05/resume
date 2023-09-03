@@ -8,6 +8,19 @@ jobs:
         docker:
             # specify the version you desire here
             - image: cimg/openjdk:20.0.1-node
+              environment:
+                # Customize the JVM maximum heap limit
+                MAVEN_OPTS: -Xmx3200m
+
+            - image: cimg/mysql:8.0
+              environment:
+                  # Customize the MYSQL Properties
+                  DB_ROOT_USER: root
+                  DB_DRIVER: com.mysql.cj.jdbc.Driver
+                  DB_PASS: ""
+                  RESUME_DB_URL: jdbc:mysql://localhost:3306/resume
+                  MYSQL_ALLOW_EMPTY_PASSWORD: yes
+                  MYSQL_ROOT_PASSWORD: ''
 
             # Specify service dependencies here if necessary
             # CircleCI maintains a library of pre-built images
@@ -15,10 +28,6 @@ jobs:
             # - image: circleci/postgres:9.4
 
         working_directory: ~/repo
-
-        environment:
-            # Customize the JVM maximum heap limit
-            MAVEN_OPTS: -Xmx3200m
 
         steps:
             - checkout
