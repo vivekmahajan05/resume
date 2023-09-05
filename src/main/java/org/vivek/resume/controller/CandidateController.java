@@ -28,6 +28,7 @@ public class CandidateController {
         log.debug(" Adding Candidate", candidate);
         log.info("Summary:" + candidate.getSummaries());
         log.info("Education:" + candidate.getEducations());
+        log.info(("Certification:" + candidate.getCertifications()));
 
         //candidateService.saveCandidate(candidate);
 

@@ -2,28 +2,31 @@ package org.vivek.resume.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
+import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "summary")
-public class Summary {
+@Table(name = "skill")
+public class Skill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, columnDefinition = "LONGTEXT")
-    private String summaryDesc;
+    private String skillType;
+
+    private String skillDesc;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonBackReference(value = "summaries")
+    @JsonBackReference(value = "skills")
     // Mapping the column of this table
     @ManyToOne
     //Adding the name
-    @JoinColumn(name = "candidate_id")
+    @JoinColumn(name = "Candidate_id")
     private Candidate candidate;
-
 }

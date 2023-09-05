@@ -27,7 +27,7 @@ public class Education {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonBackReference
+    @JsonBackReference(value = "educations")
     // Mapping the column of this table
     @ManyToOne
     //Adding the name
