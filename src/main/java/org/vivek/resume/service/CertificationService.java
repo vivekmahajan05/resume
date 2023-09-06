@@ -3,6 +3,7 @@ package org.vivek.resume.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.vivek.resume.entity.Candidate;
 import org.vivek.resume.entity.Certification;
 import org.vivek.resume.exception.NotFoundException;
 import org.vivek.resume.repository.CertificationRepository;
@@ -17,11 +18,20 @@ public class CertificationService {
 
     private final CertificationRepository certificationRepository;
 
-    public Certification save(Certification certification){
+    public Certification save(Integer candidateId, Certification certification){
+        Candidate candidate = new Candidate();
+        candidate.setId(candidateId);
+
+        certification.setCandidate(candidate);
         return certificationRepository.save(certification);
     }
 
-    public void saveAll(List<Certification> certifications){
+    public void saveAll(Integer candidateId, List<Certification> certifications){
+        Candidate candidate = new Candidate();
+        candidate.setId(candidateId);
+
+        certifications.forEach(certification -> certification.setCandidate(candidate));
+
         certificationRepository.saveAll(certifications);
     }
 

@@ -3,6 +3,7 @@ package org.vivek.resume.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.vivek.resume.entity.Candidate;
 import org.vivek.resume.entity.Project;
 import org.vivek.resume.exception.NotFoundException;
 import org.vivek.resume.repository.ProjectRepository;
@@ -17,11 +18,20 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    public Project save(Project project){
+    public Project save(Integer candidateId, Project project){
+        Candidate candidate = new Candidate();
+        candidate.setId(candidateId);
+
+        project.setCandidate(candidate);
         return projectRepository.save(project);
     }
 
-    public void saveAll(List<Project> projects){
+    public void saveAll(Integer candidateId, List<Project> projects){
+        Candidate candidate = new Candidate();
+        candidate.setId(candidateId);
+
+        projects.forEach(project -> project.setCandidate(candidate));
+
         projectRepository.saveAll(projects);
     }
 

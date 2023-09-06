@@ -23,17 +23,17 @@ public class CertificationController {
     private final CertificationService certificationService;
 
     @Transactional
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addCertification", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Certification> addCertification(@RequestBody Certification certification) {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addCertification/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Certification> addCertification(@PathVariable(name = "id") Integer id, @RequestBody Certification certification) {
         log.debug("Add Certification: " + certification);
-        return new ResponseEntity<>(certificationService.save(certification), HttpStatus.CREATED);
+        return new ResponseEntity<>(certificationService.save(id, certification), HttpStatus.CREATED);
     }
 
     @Transactional
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addCertifications", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addCertifications(@RequestBody List<Certification> certifications) {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addCertifications/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addCertifications(@PathVariable(name = "id") Integer id, @RequestBody List<Certification> certifications) {
         log.debug("Add Certifications: " + certifications);
-        certificationService.saveAll(certifications);
+        certificationService.saveAll(id, certifications);
         return new ResponseEntity<>("Certifications Added", HttpStatus.CREATED);
     }
 

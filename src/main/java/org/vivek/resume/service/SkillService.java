@@ -3,6 +3,7 @@ package org.vivek.resume.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.vivek.resume.entity.Candidate;
 import org.vivek.resume.entity.Skill;
 import org.vivek.resume.exception.NotFoundException;
 import org.vivek.resume.repository.SkillRepository;
@@ -17,11 +18,19 @@ public class SkillService {
 
     private final SkillRepository skillRepository;
 
-    public Skill save(Skill skill){
+    public Skill save(Integer candidateId, Skill skill){
+        Candidate candidate = new Candidate();
+        candidate.setId(candidateId);
+
+        skill.setCandidate(candidate);
         return skillRepository.save(skill);
     }
 
-    public void saveAll(List<Skill> skills){
+    public void saveAll(Integer candidateId, List<Skill> skills){
+        Candidate candidate = new Candidate();
+        candidate.setId(candidateId);
+
+        skills.forEach(skill -> skill.setCandidate(candidate));
         skillRepository.saveAll(skills);
     }
 
