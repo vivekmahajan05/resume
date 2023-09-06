@@ -1,8 +1,11 @@
 package org.vivek.resume.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -24,6 +27,9 @@ public class Education {
 
     @Column(columnDefinition = "TEXT")
     private String degree;
+
+    @JsonFormat(pattern="yyyy")
+    private Date graduationYear;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

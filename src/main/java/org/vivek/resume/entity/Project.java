@@ -1,14 +1,14 @@
 package org.vivek.resume.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
@@ -23,13 +23,21 @@ public class Project {
     private String company;
     private String location;
     private String role;
-    private String duration;
+
+    @JsonFormat(pattern="yyyy-MM")
+    private Date startDate;
+
+    @JsonFormat(pattern="yyyy-MM")
+    private Date endDate;
+
+    @Column(columnDefinition = "TINYINT(1)")
+    private boolean isPresent;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonManagedReference(value = "projectResponsibilities")
     @OneToMany(mappedBy = "project", cascade = { CascadeType.ALL})
-    private Set<ProjectResponsibility> projectResponsibilities = new HashSet<>();
+    private List<ProjectResponsibility> projectResponsibilities = new ArrayList<>();
 
 
     private String projectSkill;
@@ -43,7 +51,7 @@ public class Project {
     @JoinColumn(name = "Candidate_id")
     private Candidate candidate;
 
-    public void addProjectResponsibilities(Set<ProjectResponsibility> projectResponsibilities){
+    public void addProjectResponsibilities(List<ProjectResponsibility> projectResponsibilities){
         projectResponsibilities.forEach(projectResponsibility -> projectResponsibility.setProject(this));
         this.projectResponsibilities = projectResponsibilities;
     }

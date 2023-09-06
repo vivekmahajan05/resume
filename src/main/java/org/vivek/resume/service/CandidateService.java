@@ -16,22 +16,22 @@ public class CandidateService {
 
     public Candidate saveCandidate(Candidate candidate){
 
-        Set<Summary> summaries = candidate.getSummaries();
+        List<Summary> summaries = candidate.getSummaries();
         candidate.addSummaries(summaries);
 
-        Set<Education> educations = candidate.getEducations();
+        List<Education> educations = candidate.getEducations();
         candidate.addEducations(educations);
 
-        Set<Certification> certifications = candidate.getCertifications();
+        List<Certification> certifications = candidate.getCertifications();
         candidate.addCertifications(certifications);
 
-        Set<Skill> skills = candidate.getSkills();
+        List<Skill> skills = candidate.getSkills();
         candidate.addSkills(skills);
 
-        Set<Project> projects = candidate.getProjects();
+        List<Project> projects = candidate.getProjects();
 
         for (Project project: projects) {
-            Set<ProjectResponsibility> projectResponsibilities = project.getProjectResponsibilities();
+            List<ProjectResponsibility> projectResponsibilities = project.getProjectResponsibilities();
             project.addProjectResponsibilities(projectResponsibilities);
         }
         candidate.addProjects(projects);

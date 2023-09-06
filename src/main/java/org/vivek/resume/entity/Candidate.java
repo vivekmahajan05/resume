@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.Email;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -46,53 +46,53 @@ public class Candidate {
     @ToString.Exclude
     @JsonManagedReference(value = "summaries")
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
-    private Set<Summary> summaries = new HashSet<>();
+    private List<Summary> summaries = new ArrayList<>();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonManagedReference(value = "educations")
     @OneToMany(mappedBy = "candidate", cascade = { CascadeType.ALL, CascadeType.MERGE})
-    private Set<Education> educations = new HashSet<>();
+    private List<Education> educations = new ArrayList<>();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonManagedReference(value = "certifications")
     @OneToMany(mappedBy = "candidate", cascade = { CascadeType.ALL})
-    private Set<Certification> certifications = new HashSet<>();
+    private List<Certification> certifications = new ArrayList<>();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonManagedReference(value = "skills")
     @OneToMany(mappedBy = "candidate", cascade = { CascadeType.ALL})
-    private Set<Skill> skills = new HashSet<>();
+    private List<Skill> skills = new ArrayList<>();
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonManagedReference(value = "projects")
     @OneToMany(mappedBy = "candidate", cascade = { CascadeType.ALL})
-    private Set<Project> projects = new HashSet<>();
+    private List<Project> projects = new ArrayList<>();
 
-    public void addSummaries(Set<Summary> summaries){
+    public void addSummaries(List<Summary> summaries){
         summaries.forEach(summary -> summary.setCandidate(this));
         this.summaries = summaries;
     }
 
-    public void addEducations(Set<Education> educations){
+    public void addEducations(List<Education> educations){
         educations.forEach(education -> education.setCandidate(this));
         this.educations = educations;
     }
 
-    public void addCertifications(Set<Certification> certifications){
+    public void addCertifications(List<Certification> certifications){
         certifications.forEach(certification -> certification.setCandidate(this));
         this.certifications = certifications;
     }
 
-    public void addSkills(Set<Skill> skills){
+    public void addSkills(List<Skill> skills){
         skills.forEach(skill -> skill.setCandidate(this));
         this.skills = skills;
     }
 
-    public void addProjects(Set<Project> projects){
+    public void addProjects(List<Project> projects){
         for (Project project: projects) {
             project.setCandidate(this);
             for( ProjectResponsibility projectResponsibility: project.getProjectResponsibilities()){

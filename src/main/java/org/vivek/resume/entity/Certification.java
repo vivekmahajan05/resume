@@ -1,6 +1,7 @@
 package org.vivek.resume.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,7 @@ public class Certification {
 
     private String title;
 
+    @JsonFormat(pattern="yyyy-MM")
     private Date aquiredOn;
 
     private String version;
