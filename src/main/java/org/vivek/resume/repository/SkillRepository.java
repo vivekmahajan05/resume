@@ -1,13 +1,13 @@
 package org.vivek.resume.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.vivek.resume.entity.Education;
+import org.vivek.resume.entity.Skill;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface EducationRepository extends JpaRepository<Education,Integer> {
-    Optional<List<Education>> findByCandidateId(Integer id);
+public interface SkillRepository extends JpaRepository<Skill, Integer> {
+    Optional<List<Skill>> findByCandidateId(Integer id);
 
     void deleteByCandidateId(Integer id);
 }

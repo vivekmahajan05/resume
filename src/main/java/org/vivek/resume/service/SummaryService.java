@@ -3,6 +3,7 @@ package org.vivek.resume.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.vivek.resume.entity.Candidate;
 import org.vivek.resume.entity.Summary;
 import org.vivek.resume.exception.NotFoundException;
 import org.vivek.resume.repository.SummaryRepository;
@@ -27,11 +28,38 @@ public class SummaryService {
         return summary.get();
     }
 
-    public void save(Summary summary){
-        summaryRepository.save(summary);
+    public Summary save(Integer candidateId, Summary summary){
+
+        Candidate candidate = new Candidate();
+        candidate.setId(candidateId);
+
+        summary.setCandidate(candidate);
+        return summaryRepository.save(summary);
     }
 
-    public void saveAll(List<Summary> summaryList){
+    public void saveAll(Integer candidateId, List<Summary> summaryList){
+        Candidate candidate = new Candidate();
+        candidate.setId(candidateId);
+
+        summaryList.forEach(summary -> summary.setCandidate(candidate));
+
         summaryRepository.saveAll(summaryList);
+    }
+
+    public Summary updateSummaryById(Integer id, Summary summary){
+
+        Summary mySummary = new Summary();
+        mySummary.setId(id);
+        mySummary.setSummaryDesc(summary.getSummaryDesc());
+
+        return summaryRepository.save(mySummary);
+    }
+
+    public void deleteSummaryById(Integer id){
+        summaryRepository.deleteById(id);
+    }
+
+    public void deleteSummaryByCandidateId(Integer id){
+        summaryRepository.deleteByCandidateId(id);
     }
 }

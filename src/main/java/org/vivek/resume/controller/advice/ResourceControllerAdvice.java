@@ -12,12 +12,11 @@ import org.vivek.security.entities.ErrorDetails;
 
 @Slf4j
 @ControllerAdvice
-public class CandidateControllerAdvice {
+public class ResourceControllerAdvice {
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorDetails> candidateNotFound(NotFoundException nfe, WebRequest request) {
-        log.info("CandidateControllerAdvice::candidateNotFound");
+    public ResponseEntity<ErrorDetails> resourceNotFound(NotFoundException nfe, WebRequest request) {
         String requestUri = ((ServletWebRequest)request).getRequest().getRequestURI().toString();
-        ErrorDetails error = new ErrorDetails("Candidate Not Found Exception", requestUri, "Candidate does not exists");
+        ErrorDetails error = new ErrorDetails("Resource Not Found Exception", requestUri, "Resource does not exists");
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

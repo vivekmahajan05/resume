@@ -7,5 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SummaryRepository extends JpaRepository<Summary, Integer> {
-    Optional<List<Summary>> findByCandidateId(Integer integer);
+    Optional<List<Summary>> findByCandidateId(Integer id);
+
+    void deleteByCandidateId(Integer id);
 }

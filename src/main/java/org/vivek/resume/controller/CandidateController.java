@@ -25,40 +25,37 @@ public class CandidateController {
     @Transactional
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addCandidate", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Candidate> addCandidate(@RequestBody Candidate candidate) {
-        log.debug(" Adding Candidate", candidate);
-        log.info("Summary:" + candidate.getSummaries());
-        log.info("Education:" + candidate.getEducations());
-        log.info(("Certification:" + candidate.getCertifications()));
-
+        log.debug("Add Candidate: " + candidate);
         //candidateService.saveCandidate(candidate);
-
         return new ResponseEntity<>(candidateService.saveCandidate(candidate), HttpStatus.CREATED);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getCandidate/{id}")
     public ResponseEntity<Candidate> getCandidateById(@PathVariable(name = "id", required = true) Integer id) {
-        log.info(" Get Candidate", id);
+        log.debug("Get Candidate: " + id);
         Candidate candidate = candidateService.getCandidateById(id);
         return new ResponseEntity<>(candidate, HttpStatus.OK);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getCandidates")
     public ResponseEntity<List<Candidate>> listCandidates() throws Exception {
-        log.info(" List Candidate");
+        log.debug("List Candidate");
 
         return new ResponseEntity<>(candidateService.getAllCandidates(), HttpStatus.OK);
     }
 
+    @Transactional
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "updateCandidate/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Candidate> UpdateCandidate(@PathVariable(name = "id", required = true) Integer id, @RequestBody Candidate candidate) {
-        log.info(" Update Candidate", candidate);
+    public ResponseEntity<Candidate> UpdateCandidate(@PathVariable(name = "id") Integer id, @RequestBody Candidate candidate) {
+        log.debug("Update Candidate: " + candidate);
 
         return new ResponseEntity<>(candidateService.updateCandidate(id, candidate), HttpStatus.OK);
     }
 
+    @Transactional
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "deleteCandidate/{id}")
-    public ResponseEntity<String> deleteCandidateById(@PathVariable(name = "id", required = true) Integer id) {
-        log.info(" Delete Candidate", id);
+    public ResponseEntity<String> deleteCandidateById(@PathVariable(name = "id") Integer id) {
+        log.debug("Delete Candidate: " + id);
         candidateService.deleteCandidateById(id);
         return new ResponseEntity<>("Candidate deleted successfully!", HttpStatus.OK);
     }

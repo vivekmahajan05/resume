@@ -7,6 +7,7 @@ import org.vivek.resume.repository.CandidateRepository;
 import org.vivek.resume.exception.NotFoundException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,20 +37,14 @@ public class CandidateService {
         }
         candidate.addProjects(projects);
 
-        //projects.forEach(project -> project.setProjectResponsibilities());
-
-        //Set<ProjectResponsibility> ProjectResponsibilities = candidate.getProjects();
-        //candidate.getProjects().get(ProjectResponsibilities);
-
-        Candidate savedCandidate = candidateRepository.saveAndFlush(candidate);
-
-        return savedCandidate;
+        return candidateRepository.saveAndFlush(candidate);
     }
 
     public Candidate getCandidateById(Integer id) {
         Optional<Candidate> candidate = Optional.of(candidateRepository.findById(id).orElseThrow(NotFoundException::new));
 
         //Collections.sort(candidate.get().getCertifications(), Comparator.comparing(Certification::getAquiredOn,Collections.reverseOrder()));
+        //candidate.get().getCertifications().stream().sorted(Comparator.comparing(Certification::getAquiredOn,Collections.reverseOrder())).collect(Collectors.toSet());
 
         return candidate.get();
     }
@@ -66,6 +61,12 @@ public class CandidateService {
         myCandidate.setLinkedinUrl(candidate.getLinkedinUrl());
         myCandidate.setProfessionalSummary(candidate.getProfessionalSummary());
 
+        myCandidate.setSummaries(candidate.getSummaries());
+        myCandidate.setEducations(candidate.getEducations());
+        myCandidate.setCertifications(candidate.getCertifications());
+        myCandidate.setSkills(candidate.getSkills());
+        myCandidate.setProjects(candidate.getProjects());
+
         return candidateRepository.save(myCandidate);
     }
 
@@ -74,7 +75,7 @@ public class CandidateService {
     }
 
     public List<Candidate> getAllCandidates() {
-       List<Candidate> candidateList= (List<Candidate>) candidateRepository.findAll();
+       List<Candidate> candidateList = candidateRepository.findAll();
        return candidateList;
     }
 }
