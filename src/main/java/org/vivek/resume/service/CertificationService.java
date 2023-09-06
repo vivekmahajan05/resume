@@ -35,26 +35,26 @@ public class CertificationService {
         certificationRepository.saveAll(certifications);
     }
 
-    public Certification updateById(Integer id, Certification certification){
-        certification.setId(id);
+    public Certification updateById(Integer certificationId, Certification certification){
+        certification.setId(certificationId);
         return certificationRepository.save(certification);
     }
 
-    public Certification getById(Integer id){
-        Optional<Certification> certification = Optional.of(certificationRepository.findById(id).orElseThrow(NotFoundException::new));
+    public Certification getById(Integer certificationId){
+        Optional<Certification> certification = Optional.of(certificationRepository.findById(certificationId).orElseThrow(NotFoundException::new));
         return certification.get();
     }
 
-    public List<Certification> getByCandidateId(Integer id){
-        Optional<List<Certification>> certificationList = Optional.of(certificationRepository.findByCandidateId(id).orElseThrow(NotFoundException::new));
+    public List<Certification> getByCandidateId(Integer candidateId){
+        Optional<List<Certification>> certificationList = Optional.of(certificationRepository.findByCandidateId(candidateId).orElseThrow(NotFoundException::new));
         return certificationList.get();
     }
 
-    public void deleteById(Integer id){
-        certificationRepository.deleteById(id);
+    public void deleteById(Integer certificationId){
+        certificationRepository.deleteById(certificationId);
     }
 
-    public void deleteByCandidateId(Integer id){
-        certificationRepository.deleteByCandidateId(id);
+    public void deleteByCandidateId(Integer certificationId){
+        certificationRepository.deleteByCandidateId(certificationId);
     }
 }

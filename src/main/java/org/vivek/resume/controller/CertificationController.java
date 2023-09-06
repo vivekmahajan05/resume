@@ -23,53 +23,61 @@ public class CertificationController {
     private final CertificationService certificationService;
 
     @Transactional
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addCertification/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Certification> addCertification(@PathVariable(name = "id") Integer id, @RequestBody Certification certification) {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "addCertification/{candidateId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Certification> addCertification(@PathVariable(name = "candidateId") Integer candidateId,
+                                                          @RequestBody Certification certification) {
         log.debug("Add Certification: " + certification);
-        return new ResponseEntity<>(certificationService.save(id, certification), HttpStatus.CREATED);
+        return new ResponseEntity<>(certificationService.save(candidateId, certification), HttpStatus.CREATED);
     }
 
     @Transactional
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addCertifications/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addCertifications(@PathVariable(name = "id") Integer id, @RequestBody List<Certification> certifications) {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "addCertifications/{candidateId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addCertifications(@PathVariable(name = "candidateId") Integer candidateId,
+                                                    @RequestBody List<Certification> certifications) {
         log.debug("Add Certifications: " + certifications);
-        certificationService.saveAll(id, certifications);
+        certificationService.saveAll(candidateId, certifications);
         return new ResponseEntity<>("Certifications Added", HttpStatus.CREATED);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getCertification/{id}")
-    public ResponseEntity<Certification> getCertificationById(@PathVariable(name = "id") Integer id) {
-        log.debug("Get Certification: " + id);
-        Certification certification = certificationService.getById(id);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getCertification/{certificationId}")
+    public ResponseEntity<Certification> getCertificationById(@PathVariable(name = "certificationId") Integer certificationId) {
+        log.debug("Get Certification: " + certificationId);
+        Certification certification = certificationService.getById(certificationId);
         return new ResponseEntity<>(certification, HttpStatus.OK);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getCertificationsByCandidateId/{id}")
-    public ResponseEntity<List<Certification>> listCertificationsByCandidateId(@PathVariable(name = "id") Integer id) throws Exception {
-        log.debug("List Certifications By Candidate Id:" + id);
-        return new ResponseEntity<>(certificationService.getByCandidateId(id), HttpStatus.OK);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "getCertificationsByCandidateId/{candidateId}")
+    public ResponseEntity<List<Certification>> listCertificationsByCandidateId(@PathVariable(name = "candidateId") Integer candidateId) {
+        log.debug("List Certifications By Candidate Id:" + candidateId);
+        return new ResponseEntity<>(certificationService.getByCandidateId(candidateId), HttpStatus.OK);
     }
 
     @Transactional
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "updateCertification/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Certification> UpdateCertification(@PathVariable(name = "id") Integer id, @RequestBody Certification certification) {
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "updateCertification/{certificationId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Certification> UpdateCertification(@PathVariable(name = "certificationId") Integer certificationId, @RequestBody Certification certification) {
         log.debug("Update Certification: " + certification);
-        return new ResponseEntity<>(certificationService.updateById(id, certification), HttpStatus.OK);
+        return new ResponseEntity<>(certificationService.updateById(certificationId, certification), HttpStatus.OK);
     }
 
     @Transactional
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "deleteCertification/{id}")
-    public ResponseEntity<String> deleteCertificationById(@PathVariable(name = "id") Integer id) {
-        log.debug("Delete Certification: " + id);
-        certificationService.deleteById(id);
+    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "deleteCertification/{certificationId}")
+    public ResponseEntity<String> deleteCertificationById(@PathVariable(name = "certificationId") Integer certificationId) {
+        log.debug("Delete Certification: " + certificationId);
+        certificationService.deleteById(certificationId);
         return new ResponseEntity<>("Certification deleted successfully!", HttpStatus.OK);
     }
 
     @Transactional
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "deleteCertificationsByCandidateId/{id}")
-    public ResponseEntity<String> deleteCertificationsByCandidateId(@PathVariable(name = "id") Integer id) {
-        log.debug("Delete Certifications: " + id);
-        certificationService.deleteByCandidateId(id);
+    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "deleteCertificationsByCandidateId/{candidateId}")
+    public ResponseEntity<String> deleteCertificationsByCandidateId(@PathVariable(name = "candidateId") Integer candidateId) {
+        log.debug("Delete Certifications: " + candidateId);
+        certificationService.deleteByCandidateId(candidateId);
         return new ResponseEntity<>("Certifications deleted successfully!", HttpStatus.OK);
     }
 }

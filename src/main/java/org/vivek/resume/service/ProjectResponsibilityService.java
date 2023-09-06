@@ -25,7 +25,6 @@ public class ProjectResponsibilityService {
 
         Project project = new Project();
         project.setId(projectId);
-        //project.setCandidate(candidate);
 
         projectResponsibility.setProject(project);
         projectResponsibility.setCandidate(candidate);
@@ -48,30 +47,35 @@ public class ProjectResponsibilityService {
         projectResponsibilityRepository.saveAll(projectResponsibilities);
     }
 
-    public ProjectResponsibility getById(Integer id){
-        Optional<ProjectResponsibility> projectResponsibility = Optional.of(projectResponsibilityRepository.findById(id).orElseThrow(NotFoundException::new));
+    public ProjectResponsibility updateById(Integer responsibilityId, ProjectResponsibility responsibility){
+        responsibility.setId(responsibilityId);
+        return projectResponsibilityRepository.save(responsibility);
+    }
+
+    public ProjectResponsibility getById(Integer responsibilityId){
+        Optional<ProjectResponsibility> projectResponsibility = Optional.of(projectResponsibilityRepository.findById(responsibilityId).orElseThrow(NotFoundException::new));
         return projectResponsibility.get();
     }
 
-    public List<ProjectResponsibility> getByCandidateId(Integer id){
-        Optional<List<ProjectResponsibility>> projectResponsibilityList = Optional.of(projectResponsibilityRepository.findByCandidateId(id).orElseThrow(NotFoundException::new));
+    public List<ProjectResponsibility> getByCandidateId(Integer candidateId){
+        Optional<List<ProjectResponsibility>> projectResponsibilityList = Optional.of(projectResponsibilityRepository.findByCandidateId(candidateId).orElseThrow(NotFoundException::new));
         return projectResponsibilityList.get();
     }
 
-    public List<ProjectResponsibility> getByProjectId(Integer id){
-        Optional<List<ProjectResponsibility>> projectResponsibilityList = Optional.of(projectResponsibilityRepository.findByProjectId(id).orElseThrow(NotFoundException::new));
+    public List<ProjectResponsibility> getByProjectId(Integer projectId){
+        Optional<List<ProjectResponsibility>> projectResponsibilityList = Optional.of(projectResponsibilityRepository.findByProjectId(projectId).orElseThrow(NotFoundException::new));
         return projectResponsibilityList.get();
     }
 
-    public void deleteById(Integer id){
-        projectResponsibilityRepository.deleteById(id);
+    public void deleteById(Integer responsibilityId){
+        projectResponsibilityRepository.deleteById(responsibilityId);
     }
 
-    public void deleteByProjectId(Integer id){
-        projectResponsibilityRepository.deleteByProjectId(id);
+    public void deleteByProjectId(Integer projectId){
+        projectResponsibilityRepository.deleteByProjectId(projectId);
     }
 
-    public void deleteByCandidateID(Integer id){
-        projectResponsibilityRepository.deleteByCandidateId(id);
+    public void deleteByCandidateId(Integer candidateId){
+        projectResponsibilityRepository.deleteByCandidateId(candidateId);
     }
 }

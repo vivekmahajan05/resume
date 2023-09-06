@@ -23,53 +23,59 @@ public class SummaryController {
     private final SummaryService summaryService;
 
     @Transactional
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addSummary/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Summary> addSummary(@PathVariable(name = "id") Integer id,@RequestBody Summary summary) {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "addSummary/{candidateId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Summary> addSummary(@PathVariable(name = "candidateId") Integer candidateId,
+                                              @RequestBody Summary summary) {
         log.debug("Add Summary: " + summary);
-        return new ResponseEntity<>(summaryService.save(id, summary), HttpStatus.CREATED);
+        return new ResponseEntity<>(summaryService.save(candidateId, summary), HttpStatus.CREATED);
     }
 
     @Transactional
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "addSummaries/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addSummaries(@PathVariable(name = "id") Integer id,@RequestBody List<Summary> summaries) {
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "addSummaries/{candidateId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addSummaries(@PathVariable(name = "candidateId") Integer candidateId,
+                                               @RequestBody List<Summary> summaries) {
         log.debug("Add Summaries: " + summaries);
-        summaryService.saveAll(id, summaries);
+        summaryService.saveAll(candidateId, summaries);
         return new ResponseEntity<>("Summaries Added", HttpStatus.CREATED);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getSummary/{id}")
-    public ResponseEntity<Summary> getSummaryById(@PathVariable(name = "id") Integer id) {
-        log.debug("Get Summary: " + id);
-        Summary summary = summaryService.getSummaryById(id);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getSummary/{summaryId}")
+    public ResponseEntity<Summary> getSummaryById(@PathVariable(name = "summaryId") Integer summaryId) {
+        log.debug("Get Summary: " + summaryId);
+        Summary summary = summaryService.getSummaryById(summaryId);
         return new ResponseEntity<>(summary, HttpStatus.OK);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getSummariesByCandidateId/{id}")
-    public ResponseEntity<List<Summary>> listSummariesByCandidateId(@PathVariable(name = "id") Integer id) throws Exception {
-        log.debug("List Summaries By Candidate Id:" + id);
-        return new ResponseEntity<>(summaryService.getSummaryByCandidateId(id), HttpStatus.OK);
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "getSummariesByCandidateId/{candidateId}")
+    public ResponseEntity<List<Summary>> listSummariesByCandidateId(@PathVariable(name = "candidateId") Integer candidateId) {
+        log.debug("List Summaries By Candidate Id:" + candidateId);
+        return new ResponseEntity<>(summaryService.getSummaryByCandidateId(candidateId), HttpStatus.OK);
     }
 
     @Transactional
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "updateSummary/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Summary> UpdateSummary(@PathVariable(name = "id") Integer id, @RequestBody Summary summary) {
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "updateSummary/{summaryId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Summary> UpdateSummary(@PathVariable(name = "summaryId") Integer summaryId,
+                                                 @RequestBody Summary summary) {
         log.debug("Update Summary: " + summary);
-        return new ResponseEntity<>(summaryService.updateSummaryById(id, summary), HttpStatus.OK);
+        return new ResponseEntity<>(summaryService.updateSummaryById(summaryId, summary), HttpStatus.OK);
     }
 
     @Transactional
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "deleteSummary/{id}")
-    public ResponseEntity<String> deleteSummaryById(@PathVariable(name = "id") Integer id) {
-        log.debug("Delete summary: " + id);
-        summaryService.deleteSummaryById(id);
+    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "deleteSummary/{summaryId}")
+    public ResponseEntity<String> deleteSummaryById(@PathVariable(name = "summaryId") Integer summaryId) {
+        log.debug("Delete summary: " + summaryId);
+        summaryService.deleteSummaryById(summaryId);
         return new ResponseEntity<>("Summary deleted successfully!", HttpStatus.OK);
     }
 
     @Transactional
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "deleteSummariesByCandidateId/{id}")
-    public ResponseEntity<String> deleteSummariesByCandidateId(@PathVariable(name = "id") Integer id) {
-        log.debug("Delete summaries: " + id);
-        summaryService.deleteSummaryByCandidateId(id);
+    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "deleteSummariesByCandidateId/{candidateId}")
+    public ResponseEntity<String> deleteSummariesByCandidateId(@PathVariable(name = "candidateId") Integer candidateId) {
+        log.debug("Delete summaries: " + candidateId);
+        summaryService.deleteSummaryByCandidateId(candidateId);
         return new ResponseEntity<>("Summaries deleted successfully!", HttpStatus.OK);
     }
 

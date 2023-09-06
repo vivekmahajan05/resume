@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
-    Optional<List<Project>> findByCandidateId(Integer id);
+    Optional<List<Project>> findByCandidateId(Integer candidateId);
 
-    void deleteByCandidateId(Integer id);
+    void deleteByCandidateId(Integer candidateId);
 }

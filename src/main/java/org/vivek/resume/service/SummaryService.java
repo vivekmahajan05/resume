@@ -18,13 +18,13 @@ public class SummaryService {
 
     private final SummaryRepository summaryRepository;
 
-    public Summary getSummaryById(Integer id){
-        Optional<Summary> summary = Optional.of(summaryRepository.findById(id).orElseThrow(NotFoundException::new));
+    public Summary getSummaryById(Integer summaryId){
+        Optional<Summary> summary = Optional.of(summaryRepository.findById(summaryId).orElseThrow(NotFoundException::new));
         return summary.get();
     }
 
-    public List<Summary> getSummaryByCandidateId(Integer id){
-        Optional<List<Summary>> summary = Optional.of(summaryRepository.findByCandidateId(id).orElseThrow(NotFoundException::new));
+    public List<Summary> getSummaryByCandidateId(Integer candidateId){
+        Optional<List<Summary>> summary = Optional.of(summaryRepository.findByCandidateId(candidateId).orElseThrow(NotFoundException::new));
         return summary.get();
     }
 
@@ -46,20 +46,16 @@ public class SummaryService {
         summaryRepository.saveAll(summaryList);
     }
 
-    public Summary updateSummaryById(Integer id, Summary summary){
-
-        Summary mySummary = new Summary();
-        mySummary.setId(id);
-        mySummary.setSummaryDesc(summary.getSummaryDesc());
-
-        return summaryRepository.save(mySummary);
+    public Summary updateSummaryById(Integer summaryId, Summary summary){
+       summary.setId(summaryId);
+        return summaryRepository.save(summary);
     }
 
-    public void deleteSummaryById(Integer id){
-        summaryRepository.deleteById(id);
+    public void deleteSummaryById(Integer summaryId){
+        summaryRepository.deleteById(summaryId);
     }
 
-    public void deleteSummaryByCandidateId(Integer id){
-        summaryRepository.deleteByCandidateId(id);
+    public void deleteSummaryByCandidateId(Integer candidateId){
+        summaryRepository.deleteByCandidateId(candidateId);
     }
 }

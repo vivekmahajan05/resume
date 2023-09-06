@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface ProjectResponsibilityRepository extends JpaRepository<ProjectResponsibility, Integer> {
 
-    Optional<List<ProjectResponsibility>> findByCandidateId(Integer id);
-    Optional<List<ProjectResponsibility>> findByProjectId(Integer id);
-    void deleteByCandidateId(Integer id);
-    void deleteByProjectId(Integer id);
+    Optional<List<ProjectResponsibility>> findByCandidateId(Integer candidateId);
+    Optional<List<ProjectResponsibility>> findByProjectId(Integer projectId);
+    void deleteByCandidateId(Integer candidateId);
+    void deleteByProjectId(Integer projectId);
 }

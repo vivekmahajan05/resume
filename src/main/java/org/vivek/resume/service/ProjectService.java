@@ -35,21 +35,26 @@ public class ProjectService {
         projectRepository.saveAll(projects);
     }
 
-    public Project getById(Integer id){
-        Optional<Project> project = Optional.of(projectRepository.findById(id).orElseThrow(NotFoundException::new));
+    public Project updateById(Integer projectId, Project project){
+        project.setId(projectId);
+        return projectRepository.save(project);
+    }
+
+    public Project getById(Integer projectId){
+        Optional<Project> project = Optional.of(projectRepository.findById(projectId).orElseThrow(NotFoundException::new));
         return project.get();
     }
 
-    public List<Project> getByCandidateId(Integer id){
-        Optional<List<Project>> projectList = Optional.of(projectRepository.findByCandidateId(id).orElseThrow(NotFoundException::new));
+    public List<Project> getByCandidateId(Integer candidateId){
+        Optional<List<Project>> projectList = Optional.of(projectRepository.findByCandidateId(candidateId).orElseThrow(NotFoundException::new));
         return projectList.get();
     }
 
-    public void deleteById(Integer id){
-        projectRepository.deleteById(id);
+    public void deleteById(Integer projectId){
+        projectRepository.deleteById(projectId);
     }
 
-    public void deleteByCandidateID(Integer id){
-        projectRepository.deleteByCandidateId(id);
+    public void deleteByCandidateId(Integer candidateId){
+        projectRepository.deleteByCandidateId(candidateId);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EducationRepository extends JpaRepository<Education,Integer> {
-    Optional<List<Education>> findByCandidateId(Integer id);
+    Optional<List<Education>> findByCandidateId(Integer candidateId);
 
-    void deleteByCandidateId(Integer id);
+    void deleteByCandidateId(Integer candidateId);
 }

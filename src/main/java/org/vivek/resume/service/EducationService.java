@@ -35,21 +35,26 @@ public class EducationService {
         educationRepository.saveAll(educations);
     }
 
-    public Education getById(Integer id){
-        Optional<Education> education = Optional.of(educationRepository.findById(id).orElseThrow(NotFoundException::new));
+    public Education getById(Integer educationId){
+        Optional<Education> education = Optional.of(educationRepository.findById(educationId).orElseThrow(NotFoundException::new));
         return education.get();
     }
 
-    public List<Education> getByCandidateId(Integer id){
-        Optional<List<Education>> educationList = Optional.of(educationRepository.findByCandidateId(id).orElseThrow(NotFoundException::new));
+    public List<Education> getByCandidateId(Integer candidateId){
+        Optional<List<Education>> educationList = Optional.of(educationRepository.findByCandidateId(candidateId).orElseThrow(NotFoundException::new));
         return educationList.get();
     }
 
-    public void deleteById(Integer id){
-        educationRepository.deleteById(id);
+    public void deleteById(Integer educationId){
+        educationRepository.deleteById(educationId);
     }
 
-    public void deleteByCandidateID(Integer id){
-        educationRepository.deleteByCandidateId(id);
+    public void deleteByCandidateId(Integer candidateId){
+        educationRepository.deleteByCandidateId(candidateId);
+    }
+
+    public Education updateById(Integer educationId, Education education) {
+        education.setId(educationId);
+        return educationRepository.save(education);
     }
 }

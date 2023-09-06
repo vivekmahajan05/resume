@@ -34,21 +34,26 @@ public class SkillService {
         skillRepository.saveAll(skills);
     }
 
-    public Skill getById(Integer id){
-        Optional<Skill> skill = Optional.of(skillRepository.findById(id).orElseThrow(NotFoundException::new));
+    public Skill updateById(Integer skillId, Skill skill){
+        skill.setId(skillId);
+        return skillRepository.save(skill);
+    }
+
+    public Skill getById(Integer skillId){
+        Optional<Skill> skill = Optional.of(skillRepository.findById(skillId).orElseThrow(NotFoundException::new));
         return skill.get();
     }
 
-    public List<Skill> getByCandidateId(Integer id){
-        Optional<List<Skill>> skillList = Optional.of(skillRepository.findByCandidateId(id).orElseThrow(NotFoundException::new));
+    public List<Skill> getByCandidateId(Integer candidateId){
+        Optional<List<Skill>> skillList = Optional.of(skillRepository.findByCandidateId(candidateId).orElseThrow(NotFoundException::new));
         return skillList.get();
     }
 
-    public void deleteById(Integer id){
-        skillRepository.deleteById(id);
+    public void deleteById(Integer skillId){
+        skillRepository.deleteById(skillId);
     }
 
-    public void deleteByCandidateID(Integer id){
-        skillRepository.deleteByCandidateId(id);
+    public void deleteByCandidateId(Integer candidateId){
+        skillRepository.deleteByCandidateId(candidateId);
     }
 }

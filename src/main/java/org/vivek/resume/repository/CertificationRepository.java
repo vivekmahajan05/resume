@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CertificationRepository extends JpaRepository<Certification, Integer> {
-    Optional<List<Certification>> findByCandidateId(Integer id);
+    Optional<List<Certification>> findByCandidateId(Integer candidateId);
 
-    void deleteByCandidateId(Integer id);
+    void deleteByCandidateId(Integer candidateId);
 }
