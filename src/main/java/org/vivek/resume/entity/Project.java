@@ -54,5 +54,6 @@ public class Project {
     public void addProjectResponsibilities(List<ProjectResponsibility> projectResponsibilities){
         projectResponsibilities.forEach(projectResponsibility -> projectResponsibility.setProject(this));
         this.projectResponsibilities = projectResponsibilities;
+
     }
 }

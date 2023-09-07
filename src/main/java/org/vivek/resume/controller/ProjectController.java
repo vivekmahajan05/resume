@@ -27,7 +27,7 @@ public class ProjectController {
             path = "addProject/{candidateId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Project> addProject(@PathVariable(name = "candidateId") Integer candidateId,
                                               @RequestBody Project project) {
-        log.debug("Add Project: " + project);
+        log.debug("Add " + candidateId + "'s Project: " + project);
         return new ResponseEntity<>(projectService.save(candidateId, project), HttpStatus.CREATED);
     }
 

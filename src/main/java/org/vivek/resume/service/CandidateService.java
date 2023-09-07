@@ -42,8 +42,12 @@ public class CandidateService {
     public Candidate getCandidateById(Integer candidateId) {
         Optional<Candidate> candidate = Optional.of(candidateRepository.findById(candidateId).orElseThrow(NotFoundException::new));
 
-        //Collections.sort(candidate.get().getCertifications(), Comparator.comparing(Certification::getAquiredOn,Collections.reverseOrder()));
-        //candidate.get().getCertifications().stream().sorted(Comparator.comparing(Certification::getAquiredOn,Collections.reverseOrder())).collect(Collectors.toSet());
+        candidate.get().getProjects().stream().filter(project -> project.isPresent()).forEach(project -> project.setEndDate(new Date()));
+
+
+        Collections.sort(candidate.get().getCertifications(), Comparator.comparing(Certification::getAquiredOn,Collections.reverseOrder()));
+        Collections.sort(candidate.get().getEducations(), Comparator.comparing(Education::getGraduationYear,Collections.reverseOrder()));
+        Collections.sort(candidate.get().getProjects(), Comparator.comparing(Project::getEndDate,Collections.reverseOrder()));
 
         return candidate.get();
     }
