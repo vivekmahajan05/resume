@@ -47,8 +47,20 @@ public class ProjectService {
     }
 
     public Project updateById(Integer projectId, Project project){
-        project.setId(projectId);
-        return projectRepository.save(project);
+        Project myProject = getById(projectId);
+
+        myProject.setProjectName(project.getProjectName());
+        myProject.setCompany(project.getCompany());
+        myProject.setLocation(project.getLocation());
+        myProject.setRole(project.getRole());
+        myProject.setStartDate(project.getStartDate());
+        myProject.setEndDate(project.getEndDate());
+        myProject.setPresent(project.isPresent());
+        myProject.setProjectSkill(project.getProjectSkill());
+
+        myProject.setProjectResponsibilities(project.getProjectResponsibilities());
+
+        return projectRepository.save(myProject);
     }
 
     public Project getById(Integer projectId){
