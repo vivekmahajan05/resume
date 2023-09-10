@@ -1,27 +1,16 @@
 package org.vivek.resume.repository;
 
 import org.assertj.core.api.Assertions;
-//import org.h2.jdbcx.JdbcDataSource;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.vivek.resume.entity.Candidate;
 import org.vivek.resume.entity.Project;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +26,8 @@ class CandidateRepositoryTest {
 
     @Mock
     Project project;
+
+
 
     @Test
     @Order(1)
@@ -60,10 +51,7 @@ class CandidateRepositoryTest {
     @Test
     @Order(2)
     public void getCandidateTest(){
-
-        //Candidate candidate = candidateRepository.findByEmail("candidate@email.com").get();
-        Candidate candidate = candidateRepository.findById(1).get();
-        //System.out.println(.toString());
+        Candidate candidate = candidateRepository.findByEmail("candidate@email.com").get();
 
         Assertions.assertThat(candidate.getId()).isGreaterThan(0);
 
@@ -96,23 +84,18 @@ class CandidateRepositoryTest {
 
     @Test
     @Order(5)
-    //@Rollback(value = false)
+    @Rollback(value = false)
     public void deleteCandidateTest(){
 
-        //Candidate candidate = candidateRepository.findByEmail("testcase@gmail.com").get();
-
-        //candidateRepository.delete(candidate);
-
-        candidateRepository.deleteById(1);
+        Candidate candidate = candidateRepository.findByEmail("testcase@gmail.com").get();
+        candidateRepository.delete(candidate);
 
         Candidate candidate1 = null;
-
         Optional<Candidate> optionalCandidate = candidateRepository.findByEmail("testcase@gmail.com");
 
         if(optionalCandidate.isPresent()){
             candidate1 = optionalCandidate.get();
         }
-
         Assertions.assertThat(candidate1).isNull();
     }
 }

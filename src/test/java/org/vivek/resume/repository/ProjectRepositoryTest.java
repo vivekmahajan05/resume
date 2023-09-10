@@ -2,7 +2,6 @@ package org.vivek.resume.repository;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ActiveProfiles("test")
@@ -28,6 +25,7 @@ class ProjectRepositoryTest {
 
     @Autowired
     private CandidateRepository candidateRepository;
+
     @Test
     @Order(1)
     @Rollback(value = false)
@@ -53,13 +51,40 @@ class ProjectRepositoryTest {
         project.setCandidate(savedCandidate);
 
         Project savedProject = projectRepository.save(project);
-        Assertions.assertThat(project.getId()).isGreaterThan(0);
+        Assertions.assertThat(savedProject.getId()).isGreaterThan(0);
     }
 
     @Test
     @Order(2)
+    @Rollback(value = false)
+    void saveProjectListTest(){
+
+        Candidate candidate = candidateRepository.findByEmail("candidate@email.com").get();
+
+        List<Project> projects = new ArrayList<>();
+        for(int i=1; i <=5; i++) {
+
+            Project project = new Project();
+            project.setProjectName("Test ProjectName");
+            project.setCompany("Test company");
+            project.setLocation("Test location");
+            project.setRole("Test Role");
+
+            project.setCandidate(candidate);
+            projects.add(project);
+        }
+
+        projectRepository.saveAll(projects);
+
+        List<Project> projectList = projectRepository.findByCandidateId(candidate.getId()).get();
+        Assertions.assertThat(projectList.size()).isEqualTo(6);
+    }
+
+    @Test
+    @Order(3)
     void findProjectByCandidateIdTest() {
-        Optional<List<Project>> projectList = projectRepository.findByCandidateId(1);
+        Candidate candidate = candidateRepository.findByEmail("candidate@email.com").get();
+        Optional<List<Project>> projectList = projectRepository.findByCandidateId(candidate.getId());
 
         List<Project> projects = null;
 
@@ -72,7 +97,7 @@ class ProjectRepositoryTest {
     }
 
     @Test
-    @Order(2)
+    @Order(4)
     void findProjectByProjectIdTest(){
         Optional<Project> optionalProject = projectRepository.findById(1);
 
@@ -84,7 +109,7 @@ class ProjectRepositoryTest {
     }
 
     @Test
-    @Order(3)
+    @Order(5)
     void updateProjectTest(){
         Optional<Project> optionalProject = projectRepository.findById(1);
 
@@ -101,12 +126,44 @@ class ProjectRepositoryTest {
     }
 
     @Test
-    @Order(4)
+    @Order(6)
     void deleteByProjectId() {
+        projectRepository.deleteById(1);
+
+        Project project = null;
+        Optional<Project> optionalProject = projectRepository.findById(1);
+
+        if(optionalProject.isPresent()){
+            project = optionalProject.get();
+        }
+
+        Assertions.assertThat(project).isNull();
     }
 
     @Test
-    @Order(5)
+    @Order(7)
     void deleteByCandidateId() {
+        Candidate candidate = candidateRepository.findByEmail("candidate@email.com").get();
+        projectRepository.deleteByCandidateId(candidate.getId());
+
+        List<Project> projectList = projectRepository.findByCandidateId(candidate.getId()).get();
+        Assertions.assertThat(projectList.size()).isEqualTo(0);
     }
+
+    @Test
+    @Order(8)
+    void deleteCandidateById() {
+        Candidate candidate = candidateRepository.findByEmail("candidate@email.com").get();
+        candidateRepository.deleteById(candidate.getId());
+
+        Candidate candidate1 = null;
+        Optional<Candidate> optionalCandidate = candidateRepository.findById(1);
+
+        if(optionalCandidate.isPresent()){
+            candidate1 = optionalCandidate.get();
+        }
+
+        Assertions.assertThat(candidate1).isNull();
+    }
+
 }
