@@ -49,9 +49,6 @@ class CertificationRepositoryTest {
         certification.setAquiredOn(new Date());
         certification.setVersion("Test version");
 
-
-        System.out.println(savedCandidate);
-
         certification.setCandidate(savedCandidate);
 
         Certification certification1 = certificationRepository.save(certification);

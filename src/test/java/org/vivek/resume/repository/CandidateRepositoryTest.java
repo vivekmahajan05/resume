@@ -45,9 +45,9 @@ class CandidateRepositoryTest {
         candidate.setLinkedinUrl("url");
         candidate.setProfessionalSummary("Professional Summary");
 
-        System.out.println(candidateRepository.save(candidate));
+        Candidate savedCandidate = candidateRepository.save(candidate);
 
-        Assertions.assertThat(candidate.getId()).isGreaterThan(0);
+        Assertions.assertThat(savedCandidate.getId()).isGreaterThan(0);
     }
 
     @Test

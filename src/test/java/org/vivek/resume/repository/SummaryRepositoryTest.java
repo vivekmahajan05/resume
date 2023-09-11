@@ -43,8 +43,6 @@ class SummaryRepositoryTest {
         Summary summary = new Summary();
         summary.setSummaryDesc("Test Project Summary");
 
-        System.out.println(savedCandidate);
-
         summary.setCandidate(savedCandidate);
 
         Summary savedSummary = summaryRepository.save(summary);

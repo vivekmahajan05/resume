@@ -89,8 +89,6 @@ class ProjectRepositoryTest {
         if(projectList.isPresent())
             projects = projectList.get();
 
-        System.out.println(projects);
-
         Assertions.assertThat(projects).isNotNull();
     }
 
