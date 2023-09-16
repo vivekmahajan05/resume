@@ -50,10 +50,11 @@ public class SkillService {
     }
 
     public void deleteById(Integer skillId){
-        skillRepository.deleteById(skillId);
+        skillRepository.deleteById(getById(skillId).getId());
     }
 
     public void deleteByCandidateId(Integer candidateId){
+        getByCandidateId(candidateId);
         skillRepository.deleteByCandidateId(candidateId);
     }
 }

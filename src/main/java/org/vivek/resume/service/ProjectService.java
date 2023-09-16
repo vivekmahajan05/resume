@@ -74,10 +74,11 @@ public class ProjectService {
     }
 
     public void deleteById(Integer projectId){
-        projectRepository.deleteById(projectId);
+        projectRepository.deleteById(getById(projectId).getId());
     }
 
     public void deleteByCandidateId(Integer candidateId){
+        getByCandidateId(candidateId);
         projectRepository.deleteByCandidateId(candidateId);
     }
 }

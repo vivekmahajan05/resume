@@ -52,10 +52,11 @@ public class SummaryService {
     }
 
     public void deleteSummaryById(Integer summaryId){
-        summaryRepository.deleteById(summaryId);
+        summaryRepository.deleteById(getSummaryById(summaryId).getId());
     }
 
     public void deleteSummaryByCandidateId(Integer candidateId){
+        getSummaryByCandidateId(candidateId);
         summaryRepository.deleteByCandidateId(candidateId);
     }
 }

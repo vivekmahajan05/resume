@@ -68,14 +68,16 @@ public class ProjectResponsibilityService {
     }
 
     public void deleteById(Integer responsibilityId){
-        projectResponsibilityRepository.deleteById(responsibilityId);
+        projectResponsibilityRepository.deleteById(getById(responsibilityId).getId());
     }
 
     public void deleteByProjectId(Integer projectId){
+        getByProjectId(projectId);
         projectResponsibilityRepository.deleteByProjectId(projectId);
     }
 
     public void deleteByCandidateId(Integer candidateId){
+        getByCandidateId(candidateId);
         projectResponsibilityRepository.deleteByCandidateId(candidateId);
     }
 }

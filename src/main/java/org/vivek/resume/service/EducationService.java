@@ -46,10 +46,11 @@ public class EducationService {
     }
 
     public void deleteById(Integer educationId){
-        educationRepository.deleteById(educationId);
+        educationRepository.deleteById(getById(educationId).getId());
     }
 
     public void deleteByCandidateId(Integer candidateId){
+        getByCandidateId(candidateId);
         educationRepository.deleteByCandidateId(candidateId);
     }
 
