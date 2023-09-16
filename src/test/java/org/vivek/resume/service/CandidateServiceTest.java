@@ -65,7 +65,12 @@ class CandidateServiceTest {
 
     @Test
     void deleteCandidateById() {
+        Optional<Candidate> optionalCandidate = Optional.of(new Candidate());
+        when(candidateRepository.findById(any(Integer.class))).thenReturn( optionalCandidate);
+
         candidateService.deleteCandidateById(any(Integer.class));
+
+        verify(candidateRepository).findById(any(Integer.class));
         verify(candidateRepository).deleteById(any(Integer.class));
     }
 
