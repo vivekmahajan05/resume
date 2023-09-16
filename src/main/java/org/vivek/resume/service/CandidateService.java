@@ -42,12 +42,12 @@ public class CandidateService {
     public Candidate getCandidateById(Integer candidateId) {
         Optional<Candidate> candidate = Optional.of(candidateRepository.findById(candidateId).orElseThrow(NotFoundException::new));
 
-        candidate.get().getProjects().stream().filter(project -> project.isPresent()).forEach(project -> project.setEndDate(new Date()));
+        candidate.get().getProjects().stream().filter(Project::isPresent).forEach(project -> project.setEndDate(new Date()));
 
 
-        Collections.sort(candidate.get().getCertifications(), Comparator.comparing(Certification::getAquiredOn,Collections.reverseOrder()));
-        Collections.sort(candidate.get().getEducations(), Comparator.comparing(Education::getGraduationYear,Collections.reverseOrder()));
-        Collections.sort(candidate.get().getProjects(), Comparator.comparing(Project::getEndDate,Collections.reverseOrder()));
+        candidate.get().getCertifications().sort(Comparator.comparing(Certification::getAquiredOn,Collections.reverseOrder()));
+        candidate.get().getEducations().sort(Comparator.comparing(Education::getGraduationYear,Collections.reverseOrder()));
+        candidate.get().getProjects().sort(Comparator.comparing(Project::getEndDate,Collections.reverseOrder()));
 
         return candidate.get();
     }
@@ -74,11 +74,11 @@ public class CandidateService {
     }
 
     public void deleteCandidateById(Integer candidateId){
-        candidateRepository.deleteById(candidateId);
+        Candidate myCandidate = getCandidateById(candidateId);
+        candidateRepository.deleteById(myCandidate.getId());
     }
 
     public List<Candidate> getAllCandidates() {
-       List<Candidate> candidateList = candidateRepository.findAll();
-       return candidateList;
+       return candidateRepository.findAll();
     }
 }

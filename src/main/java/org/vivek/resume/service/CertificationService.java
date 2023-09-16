@@ -36,7 +36,7 @@ public class CertificationService {
     }
 
     public Certification updateById(Integer certificationId, Certification certification){
-        certification.setId(certificationId);
+        certification.setId(getById(certificationId).getId());
         return certificationRepository.save(certification);
     }
 
@@ -51,10 +51,12 @@ public class CertificationService {
     }
 
     public void deleteById(Integer certificationId){
-        certificationRepository.deleteById(certificationId);
+         Certification certification = getById(certificationId);
+         certificationRepository.deleteById(certification.getId());
     }
 
-    public void deleteByCandidateId(Integer certificationId){
-        certificationRepository.deleteByCandidateId(certificationId);
+    public void deleteByCandidateId(Integer candidateId){
+        getByCandidateId(candidateId);
+        certificationRepository.deleteByCandidateId(candidateId);
     }
 }
